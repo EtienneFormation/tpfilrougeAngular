@@ -1,17 +1,10 @@
-import {
-  AfterContentChecked,
-  AfterContentInit, AfterViewChecked,
-  AfterViewInit,
-  Component,
-  DoCheck,
-  OnChanges,
-  OnDestroy,
-  OnInit, SimpleChanges
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {CarbonFootprintFormComponent} from "../carbon-footprint-form/carbon-footprint-form.component";
 import {CarbonFootprintResultComponent} from "../carbon-footprint-result/carbon-footprint-result.component";
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
+import {CarbonFootprintComputeService} from "../services/carbon-footprint-compute.service";
+import {Voyage} from "../entities/voyage";
 
 @Component({
   selector: 'app-carbon-footprint',
@@ -28,93 +21,45 @@ import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
   templateUrl: './carbon-footprint.component.html',
   styleUrl: './carbon-footprint.component.css'
 })
-export class CarbonFootprintComponent
-  implements  OnInit,
-              OnDestroy,
-              OnChanges,
-              DoCheck,
-              AfterContentInit,
-              AfterContentChecked,
-              AfterViewInit,
-              AfterViewChecked {
-  distanceKm = 0;
-  consommationPour100Km = 6;
+export class CarbonFootprintComponent implements OnInit {
+  voyage : Voyage;
 
-  voyages = [
-    { distanceKm: 50, consommationPour100Km: 5 },
-    { distanceKm: 150, consommationPour100Km: 6 },
-    { distanceKm: 250, consommationPour100Km: 7 },
-    { distanceKm: 350, consommationPour100Km: 8 },
-    { distanceKm: 450, consommationPour100Km: 9 }
-  ];
-
-  calculateConsoColor() {
-    if (this.consommationPour100Km > 7) return 'red';
-    if (this.consommationPour100Km < 4) return 'green';
-    return '';
+  constructor(private carbonFootprintService : CarbonFootprintComputeService) {
+    this.voyage = carbonFootprintService.getResumeVoyage();
   }
 
-  add100() {
-    this.distanceKm += 100;
-  }
-
-  ajouterVoyage() {
-    this.voyages.push({
-      distanceKm: Math.round(10 + Math.random() * 500),
-      consommationPour100Km: Math.round( 2 + Math.random() * 9),
-    });
-    this.calculerDistance();
-  }
-
-  calculerDistance() {
-    this.distanceKm = 0;
-    this.consommationPour100Km = 0;
-    if (this.voyages) {
-      this.voyages.forEach(
-        (voyage) => {
-          this.distanceKm += voyage.distanceKm;
-          this.consommationPour100Km += voyage.consommationPour100Km;
-        });
-    }
-    this.consommationPour100Km =
-      Math.round(100 * this.consommationPour100Km / this.voyages.length) / 100;
-
-  }
-
-  /*
-   * Tests du cycle de vie d'un composant Angular
-   */
   ngOnInit() {
     this.calculerDistance();
     console.log("0. Création du composant carbon-footprint");
   }
 
-  ngDoCheck(): void {
-    console.log("1. Vérification des données.");
+  ajouterVoyage() {
+    let distance = Math.round(10 + Math.random() * 500);
+    let conso = Math.round( 2 + Math.random() * 9);
+
+    this.carbonFootprintService.addVoyage({
+      distanceKm: distance,
+      consommationPour100Km: conso,
+      CO2 : distance * conso / 100 * 2.3
+    });
+    this.calculerDistance()
   }
 
-  ngAfterContentInit(): void {
-    console.log("2. Contenu initialisé !");
+  calculerDistance() {
+    this.voyage = this.carbonFootprintService.getResumeVoyage();
   }
 
-  ngAfterContentChecked(): void {
-    console.log("3. Contenu checked !");
+  get voyages() {
+    return this.carbonFootprintService.getVoyages();
   }
 
-  ngAfterViewInit(): void {
-    console.log("4. Vue initalisée !");
+  calculateConsoColor() {
+    if (this.voyage.consommationPour100Km > 7) return 'red';
+    if (this.voyage.consommationPour100Km < 4) return 'green';
+    return '';
   }
 
-  ngAfterViewChecked(): void {
-    console.log("5. Vue checked !");
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log("6. Modifications appliquées.");
-    console.log(changes);
-  }
-
-  ngOnDestroy() {
-    console.log("7. Destruction du composant carbon-footprint");
+  add100() {
+    this.voyage.distanceKm += 100;
   }
 }

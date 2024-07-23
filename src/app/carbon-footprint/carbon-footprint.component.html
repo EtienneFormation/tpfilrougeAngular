@@ -4,28 +4,30 @@
     <td>
       <input
         type="number"
-        [(ngModel)]="consommationPour100Km">
+        [(ngModel)]="voyage.consommationPour100Km">
     </td>
   </tr>
   <tr [ngClass]="{
-    'basse-distance': distanceKm < 100,
-    'haute-distance' : distanceKm > 500
+    'basse-distance': voyage.distanceKm < 100,
+    'haute-distance' : voyage.distanceKm > 500
   }">
     <td>Distance parcourue</td>
     <td>
-      <input type="number" [(ngModel)]="distanceKm">km
-      <button (click)="add100()">+100</button>
+      <input [(ngModel)]="voyage.distanceKm">km
+      <p>{{voyage.distanceKm}}km
+        <button (click)="add100()">+100</button>
+      </p>
     </td>
   </tr>
   <tr>
     <td>Consommation totale</td>
-    <td>{{consommationPour100Km * distanceKm}}</td>
+    <td>{{voyage.consommationPour100Km * voyage.distanceKm / 100}}</td>
   </tr>
 </table>
-  <p *ngIf="consommationPour100Km > 7">
+  <p *ngIf="voyage.consommationPour100Km > 7">
     Attention, votre consommation est élevée.
   </p>
-  <p *ngIf="consommationPour100Km < 4">
+  <p *ngIf="voyage.consommationPour100Km < 4">
     Félicitations, votre consommation est faible.
   </p>
 
@@ -35,12 +37,14 @@
   <tr>
     <th>Distance</th>
     <th>Consommation pour 100 kms</th>
+    <th>Emission de CO2</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let voyage of voyages">
     <td>{{ voyage.distanceKm }} km</td>
     <td>{{ voyage.consommationPour100Km }} L</td>
+    <td>{{ voyage.CO2 }} </td>
   </tr>
   </tbody>
 </table>
