@@ -1,0 +1,50 @@
+<table>
+  <tr [ngStyle]="{color: calculateConsoColor()}">
+    <td>Consommation pour 100km</td>
+    <td>
+      <input
+        type="number"
+        [(ngModel)]="consommationPour100Km">
+    </td>
+  </tr>
+  <tr [ngClass]="{
+    'basse-distance': distanceKm < 100,
+    'haute-distance' : distanceKm > 500
+  }">
+    <td>Distance parcourue</td>
+    <td>
+      <input type="number" [(ngModel)]="distanceKm">km
+      <button (click)="add100()">+100</button>
+    </td>
+  </tr>
+  <tr>
+    <td>Consommation totale</td>
+    <td>{{consommationPour100Km * distanceKm}}</td>
+  </tr>
+</table>
+  <p *ngIf="consommationPour100Km > 7">
+    Attention, votre consommation est élevée.
+  </p>
+  <p *ngIf="consommationPour100Km < 4">
+    Félicitations, votre consommation est faible.
+  </p>
+
+<h2>Liste des voyages</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Distance</th>
+    <th>Consommation pour 100 kms</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let voyage of voyages">
+    <td>{{ voyage.distanceKm }} km</td>
+    <td>{{ voyage.consommationPour100Km }} L</td>
+  </tr>
+  </tbody>
+</table>
+<button (click)="ajouterVoyage()">Ajouter un voyage</button>
+
+<app-carbon-footprint-form/>
+<app-carbon-footprint-result/>

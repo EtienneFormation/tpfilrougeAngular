@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+*, body {
+  margin: 0;
+  font-family: Calibri, serif;
+}
+
+body {
+  background-color: #2b2b2b;
+  color: #d4d4d4;
+}
+
+app-header {
+  display: flex;
+  height: 2em;
+  width: 100vw;
+  background-color: #1f1f1f;
+  align-items: center;
+}
+
+app-footer {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  height: 1.4em;
+  width: 100vw;
+  background-color: #1f1f1f;
+  align-items: center;
+}
