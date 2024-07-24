@@ -6,3 +6,27 @@ p {
 .title {
   font-size: 1.2em;
 }
+
+.actions {
+  position: absolute;
+  height: 2em;
+  right: 0;
+}
+
+.actions>div {
+  height: 100%;
+  padding-left: .4em;
+  padding-right: .4em;
+  display: flex;
+  align-items: center;
+  transition: .3s all;
+}
+
+.actions a {
+  text-decoration: none;
+  color: #d4d4d4;
+}
+
+.actions>div:hover {
+  background-color: #404040;
+}

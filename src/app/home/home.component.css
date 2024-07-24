@@ -1,0 +1,28 @@
+img {
+  max-width: 64px;
+  max-height: 64px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.image-holder {
+  width: 164px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .2s all;
+}
+
+.image-holder:hover {
+  background-color: white;
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
