@@ -5,5 +5,21 @@
   </div>
 
   <p>Welcome !</p>
-  <button (click)="login()">Accéder à l'application</button>
+
+  <form (ngSubmit)="login()">
+    <div>
+      <label for="username">Nom d'utilisateur</label>
+      <input type="text" id="username" name="username" [(ngModel)]="username"/>
+    </div>
+    <div>
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password"/>
+    </div>
+    <p *ngFor="let msg of messages">
+      {{msg}}
+    </p>
+
+    <input type="submit" value="Se connecter" />
+  </form>
+
 </div>

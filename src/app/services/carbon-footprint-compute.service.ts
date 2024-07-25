@@ -5,15 +5,20 @@ import {Voyage} from "../entities/voyage";
   providedIn: 'root'
 })
 export class CarbonFootprintComputeService {
-  private voyages : Voyage[] = [
-    { distanceKm: 50, consommationPour100Km: 5, CO2: 50 * 5 / 100 * 2.3 },
-    { distanceKm: 150, consommationPour100Km: 6, CO2: 150 * 6 / 100 * 2.3 },
-    { distanceKm: 250, consommationPour100Km: 7, CO2: 250 * 7 / 100 * 2.3 },
-    { distanceKm: 350, consommationPour100Km: 8, CO2: 350 * 8 / 100 * 2.3 },
-    { distanceKm: 450, consommationPour100Km: 9, CO2: 450 * 9 / 100 * 2.3 }
-  ];
+  private voyages : Voyage[] = [];
 
   addVoyage(voyage : Voyage) {
+    switch (voyage.typeDeTransport) {
+      case 'voiture':
+        voyage.CO2 = voyage.distanceKm * voyage.consommationPour100Km / 100 * 2.3;
+        break;
+      case 'train':
+        voyage.CO2 = voyage.distanceKm * 0.03;
+        break;
+      case 'avion':
+        voyage.CO2 = voyage.distanceKm * 0.2;
+        break;
+    }
     this.voyages.push(voyage);
   }
 
@@ -21,7 +26,7 @@ export class CarbonFootprintComputeService {
     return this.voyages;
   }
 
-  getResumeVoyage() : Voyage {
+  getResumeVoyage() {
     let distanceKm = 0;
     let consommationPour100Km = 0;
 

@@ -1,3 +1,30 @@
-<form>
-  <p>Un formulaire super sophistiqué ! (si si je vous jure)</p>
+<form [formGroup]="formulaireVoyage" (ngSubmit)="saveTrip()" >
+  <div>
+    <label for="distance">Distance : </label>
+    <input type="number" id="distance" name="distance" formControlName="distance" />
+    <p *ngIf="formulaireVoyage.get('distance')?.errors?.['required']">La distance est obligatoire.</p>
+    <p *ngIf="formulaireVoyage.get('distance')?.errors?.['min']">La distance doit être supérieure à zéro.</p>
+  </div>
+
+  <div>
+    <label for="typeDeTransport">Type de transport : </label>
+    <select id="typeDeTransport" name="typeDeTransport" formControlName="typeDeTransport">
+      <option value="voiture">Voiture</option>
+      <option value="train">Train</option>
+      <option value="avion">Avion</option>
+    </select>
+  </div>
+
+  <div *ngIf="formulaireVoyage.get('typeDeTransport')?.value === 'voiture'">
+    <label for="conso">Conso : </label>
+    <input type="number" id="conso" name="conso" formControlName="conso" />
+  </div>
+
+  <div>
+    <label for="date">Date : </label>
+    <input type="date" id="date" name="date" formControlName="date" />
+    <p *ngIf="formulaireVoyage.get('date')?.errors?.['required']">La date est obligatoire.</p>
+  </div>
+
+  <input type="submit" value="Enregistrer le voyage" />
 </form>

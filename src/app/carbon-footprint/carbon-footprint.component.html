@@ -36,6 +36,7 @@
   <thead>
   <tr>
     <th>Distance</th>
+    <th>Transport</th>
     <th>Consommation pour 100 kms</th>
     <th>Emission de CO2</th>
   </tr>
@@ -43,7 +44,8 @@
   <tbody>
   <tr *ngFor="let voyage of voyages">
     <td>{{ voyage.distanceKm }} km</td>
-    <td>{{ voyage.consommationPour100Km }} L</td>
+    <td>{{ voyage.typeDeTransport}}</td>
+    <td><span *ngIf="voyage.consommationPour100Km">{{ voyage.consommationPour100Km }} L</span></td>
     <td>{{ voyage.CO2 }} </td>
   </tr>
   </tbody>

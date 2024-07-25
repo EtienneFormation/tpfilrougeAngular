@@ -4,7 +4,6 @@ import {CarbonFootprintResultComponent} from "../carbon-footprint-result/carbon-
 import {FormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {CarbonFootprintComputeService} from "../services/carbon-footprint-compute.service";
-import {Voyage} from "../entities/voyage";
 
 @Component({
   selector: 'app-carbon-footprint',
@@ -22,7 +21,7 @@ import {Voyage} from "../entities/voyage";
   styleUrl: './carbon-footprint.component.css'
 })
 export class CarbonFootprintComponent implements OnInit {
-  voyage : Voyage;
+  voyage : {distanceKm: number, consommationPour100Km: number, CO2: number};
 
   constructor(private carbonFootprintService : CarbonFootprintComputeService) {
     this.voyage = carbonFootprintService.getResumeVoyage();
@@ -40,7 +39,7 @@ export class CarbonFootprintComponent implements OnInit {
     this.carbonFootprintService.addVoyage({
       distanceKm: distance,
       consommationPour100Km: conso,
-      CO2 : distance * conso / 100 * 2.3
+      typeDeTransport : 'voiture'
     });
     this.calculerDistance()
   }
