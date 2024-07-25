@@ -4,7 +4,7 @@
     <td>
       <input
         type="number"
-        [(ngModel)]="voyage.consommationPour100Km">
+        [(ngModel)]="voyage.consommationTotale">
     </td>
   </tr>
   <tr [ngClass]="{
@@ -21,13 +21,13 @@
   </tr>
   <tr>
     <td>Consommation totale</td>
-    <td>{{voyage.consommationPour100Km * voyage.distanceKm / 100}}</td>
+    <td>{{voyage.consommationTotale * voyage.distanceKm / 100}}</td>
   </tr>
 </table>
-  <p *ngIf="voyage.consommationPour100Km > 7">
+  <p *ngIf="voyage.consommationTotale > 7">
     Attention, votre consommation est élevée.
   </p>
-  <p *ngIf="voyage.consommationPour100Km < 4">
+  <p *ngIf="voyage.consommationTotale < 4">
     Félicitations, votre consommation est faible.
   </p>
 

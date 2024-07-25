@@ -10,11 +10,13 @@ export class UserService {
 
   constructor() { }
 
-  login(user: string) {
+  async login(user: string) {
     this.user = user;
   }
 
-  get username() {
-    return this.user;
+  async getUsername() {
+    return new Promise<string>((resolve) => {
+      resolve(this.user);
+    });
   }
 }

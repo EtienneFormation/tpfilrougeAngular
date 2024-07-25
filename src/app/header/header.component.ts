@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {UserService} from "../services/user.service";
 
@@ -11,11 +11,13 @@ import {UserService} from "../services/user.service";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   title = "Carbon footprint";
   userName = "Etienne";
 
-  constructor(service : UserService) {
-    this.userName = service.username;
+  constructor(private service : UserService) {}
+
+  async ngOnInit() {
+    this.userName = await this.service.getUsername();
   }
 }

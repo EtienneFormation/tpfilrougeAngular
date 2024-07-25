@@ -36,11 +36,11 @@ export class HomeComponent implements DoCheck {
       this.messages.push("Le mot de passe doit faire 6 caractères ou plus.");
   }
 
-  login() {
+  async login() {
     this.checkForm();
     if (this.messages.length > 0) return;
 
-    this.service.login(this.username);
+    await this.service.login(this.username);
     this.router.navigate(['summary']);
   }
 }

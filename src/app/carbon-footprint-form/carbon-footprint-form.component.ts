@@ -25,10 +25,10 @@ export class CarbonFootprintFormComponent {
     });
   }
 
-  saveTrip() {
+  async saveTrip() {
     if (!this.formulaireVoyage.valid) return;
 
-    this.service.addVoyage({
+    await this.service.addVoyage({
       distanceKm : this.formulaireVoyage.value.distance,
       consommationPour100Km : this.formulaireVoyage.value.conso,
       typeDeTransport : this.formulaireVoyage.value.typeDeTransport
