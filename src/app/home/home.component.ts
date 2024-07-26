@@ -40,7 +40,21 @@ export class HomeComponent implements DoCheck {
     this.checkForm();
     if (this.messages.length > 0) return;
 
-    await this.service.login(this.username);
+    await this.service.login({
+      "username": this.username,
+      "password": this.password,
+    });
     this.router.navigate(['summary']);
+  }
+
+  async inscrire() {
+    this.checkForm();
+    if (this.messages.length > 0) return;
+
+    await this.service.register({
+      "username": this.username,
+      "password": this.password,
+    })
+    this.messages.push(`Utilisateur ${this.username} inscrit !`);
   }
 }
